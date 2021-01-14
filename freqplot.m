@@ -1,12 +1,12 @@
-function [freq_plot] = freqplot(N, BW, EDGES, raw_units)
+function [freq_plot] = freqplot(N, BW, EDGES, units_sorted)
 %% Calculating firing frequencies of the recording (e.g. fig 1 histogram normalized to # of units)
 
-avg_firing = (N(1,:) / BW) / numel(raw_units);                              % [no. events / bin size (s) = frequency] / no. units = average firing frequency per unit
+avg_firing = (N(1,:) / BW) / numel(units_sorted);                           % [no. events / bin size (s) = frequency] / no. units = average firing frequency per unit
 bin_centers = EDGES(1:end-1) + diff(EDGES)/2;
 
-spikes = cell(numel(raw_units), 1);
-for m = 1:length(raw_units)
-    spikes{m} = (numel(raw_units{m}(:,1)) / (length(EDGES) / 10));
+spikes = cell(numel(units_sorted), 1);
+for m = 1:length(units_sorted)
+    spikes{m} = (numel(units_sorted{m}(:,1)) / (length(EDGES) / 10));
 end
 spikefreq.avg = mean(cell2mat(spikes));
 spikefreq.std = std(cell2mat(spikes));
